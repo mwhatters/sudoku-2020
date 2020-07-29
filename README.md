@@ -11,23 +11,36 @@ irb -r ./game.rb
 
 then, in the session:
 ```ruby
-game = Sudoku::Game.new(random: true, density: 0.1)
-game.solve
-
-# random: bool -- generates a random board
+# random: bool -- generates a random board. if false, the board will be empty
 # density: float -- determines how densely filled a random board should be. Only works when random is true
 
 game = Sudoku::Game.new(random: true, density: 0.1)
 game.display
-# [0, 0, 0, 0, 0, 0, 0, 0, 0]
-# [1, 0, 0, 0, 6, 0, 0, 0, 0]
-# [5, 0, 0, 0, 0, 0, 0, 0, 0]
-# [2, 0, 0, 0, 5, 0, 0, 0, 0]
-# [0, 0, 0, 0, 0, 0, 0, 0, 0]
-# [7, 0, 9, 2, 0, 0, 0, 0, 0]
-# [0, 0, 0, 0, 0, 0, 9, 0, 0]
-# [0, 0, 2, 0, 0, 0, 0, 0, 0]
-# [9, 0, 0, 0, 0, 0, 0, 0, 0]
+[# 0, 0, 0, 0, 0, 2, 0, 0, 0]
+[# 0, 2, 0, 0, 0, 0, 0, 0, 0]
+[# 0, 0, 0, 1, 0, 9, 0, 0, 0]
+[# 0, 0, 0, 0, 5, 6, 0, 0, 0]
+[# 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[# 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[# 0, 0, 0, 6, 0, 1, 0, 0, 0]
+[# 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[# 0, 0, 0, 4, 0, 0, 6, 0, 0]
+
+game.solve(display: true)
+# display: bool -- will display the board updating per move in terminal while solving
+
+# [1, 3, 4, 5, 6, 2, 7, 8, 9]
+# [5, 2, 9, 3, 7, 8, 1, 4, 6]
+# [6, 7, 8, 1, 4, 9, 2, 3, 5]
+# [2, 1, 3, 7, 5, 6, 4, 9, 8]
+# [4, 6, 7, 8, 9, 3, 5, 1, 2]
+# [8, 9, 5, 2, 1, 4, 3, 6, 7]
+# [3, 5, 2, 6, 8, 1, 9, 7, 4]
+# [7, 4, 6, 9, 3, 5, 8, 2, 1]
+# [9, 8, 1, 4, 2, 7, 6, 5, 3]
+
+game.moves_until_complete
+# => 525
 ```
 
 This shows an improvement from the previous iteration of this project in a number of ways:
