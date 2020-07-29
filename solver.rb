@@ -4,7 +4,8 @@ require_relative './coordinates.rb'
 module Sudoku
   module Solver
 
-    def self.solve(game: Sudoku::Game.new, row: 0, column: 0)
+    def self.solve(game: Sudoku::Game.new, display: false, row: 0, column: 0)
+      game.moves_until_complete += 1
       current_row = row
       current_column = column
       next_step = Sudoku::Coordinates.new(row: current_row, column: current_column, increment_on_init: true)
@@ -18,10 +19,11 @@ module Sudoku
         game.board[current_row][current_column] = sudoku_number
 
         if game.valid?
-          game.display
+          game.display if display
           return game if game.complete?
           return true if self.solve(
             game: game,
+            display: display,
             row: next_step.row,
             column: next_step.column,
           )

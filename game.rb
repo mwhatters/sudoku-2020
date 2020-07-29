@@ -1,14 +1,16 @@
 require_relative './solver.rb'
 require_relative './validator.rb'
+require 'pry'
 
 module Sudoku
   class Game
 
-    attr_accessor :board, :given_number_coordinates
+    attr_accessor :board, :given_number_coordinates, :moves_until_complete
     attr_reader :density
 
     def initialize(board: nil, random: false, density: 0.3)
       @given_number_coordinates = []
+      @moves_until_complete = 0
       @density = density
       @board = if !board
         random ? new_random : new_empty
@@ -19,8 +21,8 @@ module Sudoku
       collect_given_number_coordinates
     end
 
-    def solve
-      Sudoku::Solver.solve(game: self)
+    def solve(display: true)
+      Sudoku::Solver.solve(game: self, display: display)
     end
 
     def valid?
@@ -43,22 +45,19 @@ module Sudoku
         displayed_row = row.map { |v| v.nil? ? 0 : v }
         p displayed_row
       end
-
       nil
     end
 
     private def new_random
-      @board = Array.new(9) { Array.new(9) }
-      board.each do |row|
+      # generate a random board, then selectively remove elements based on density. 
+      @board = new_empty
+      @board[0] = (1..9).to_a.shuffle
+      Sudoku::Solver.solve(game: self, display: false)
+
+      @board.each do |row|
         row.each_with_index do |val,idx|
-          nums = Array.new(9) { |i| i+1 }.shuffle!
-          if rand(0.0..1.0) < density && val.nil?
-            idx_ref = 0
-            row[idx] = nums[idx_ref]
-            until valid
-              idx_ref += 1
-              row[idx] = nums[idx_ref]
-            end
+          if rand(0.0..1.0) > density
+            row[idx] = nil
           end
         end
       end
