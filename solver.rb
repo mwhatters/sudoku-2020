@@ -5,7 +5,7 @@ module Sudoku
   module Solver
 
     def self.solve(game: Sudoku::Game.new, display: false, row: 0, column: 0)
-      game.moves_until_complete += 1
+      game.total_moves_performed += 1
       current_row = row
       current_column = column
       next_step = Sudoku::Coordinates.new(row: current_row, column: current_column, increment_on_init: true)

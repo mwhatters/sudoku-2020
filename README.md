@@ -39,7 +39,7 @@ game.solve(display: true)
 # [7, 4, 6, 9, 3, 5, 8, 2, 1]
 # [9, 8, 1, 4, 2, 7, 6, 5, 3]
 
-game.moves_until_complete
+game.total_moves_performed
 # => 525
 ```
 

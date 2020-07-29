@@ -5,12 +5,12 @@ require 'pry'
 module Sudoku
   class Game
 
-    attr_accessor :board, :given_number_coordinates, :moves_until_complete
+    attr_accessor :board, :given_number_coordinates, :total_moves_performed
     attr_reader :density
 
     def initialize(board: nil, random: false, density: 0.3)
       @given_number_coordinates = []
-      @moves_until_complete = 0
+      @total_moves_performed = 0
       @density = density
       @board = if !board
         random ? new_random : new_empty
